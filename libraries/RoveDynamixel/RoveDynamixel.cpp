@@ -75,22 +75,6 @@ uint8_t DynamixelPing(Dynamixel dyna) {
   return DynamixelGetError(dyna);
 }
 
-uint8_t DynamixelSetId(Dynamixel* dyna, uint8_t id) {
-  uint8_t msgLength = 3;
-  uint8_t commands[msgLength];
-  
-  commands[0] = DYNAMIXEL_WRITE_DATA;
-  commands[1] = DYNAMIXEL_ID;
-  commands[2] = id;
-  
-  DynamixelSendPacket(*dyna, msgLength, commands);
-  
-  dyna -> id = id;
-  
-  wait(TXDELAY);
-  return DynamixelGetError(*dyna);
-}
-
 uint8_t DynamixelRotateJoint(Dynamixel dyna, uint16_t position) {
   uint8_t msgLength = 4;
   uint8_t commands[msgLength];
@@ -123,6 +107,22 @@ uint8_t DynamixelSpinWheel(Dynamixel dyna, uint16_t position, uint16_t speed) {
   return DynamixelGetError(dyna);
 }
 
+uint8_t DynamixelSetId(Dynamixel* dyna, uint8_t id) {
+  uint8_t msgLength = 3;
+  uint8_t commands[msgLength];
+  
+  commands[0] = DYNAMIXEL_WRITE_DATA;
+  commands[1] = DYNAMIXEL_ID;
+  commands[2] = id;
+  
+  DynamixelSendPacket(*dyna, msgLength, commands);
+  
+  dyna -> id = id;
+  
+  wait(TXDELAY);
+  return DynamixelGetError(*dyna);
+}
+
 uint8_t DynamixelSetBaudRate(Dynamixel dyna, uint8_t baudByte) {
   uint8_t msgLength = 3;
   uint8_t commands[msgLength];
@@ -130,6 +130,20 @@ uint8_t DynamixelSetBaudRate(Dynamixel dyna, uint8_t baudByte) {
   commands[0] = DYNAMIXEL_WRITE_DATA;
   commands[1] = DYNAMIXEL_BAUD_RATE;
   commands[2] = baudByte;
+  
+  DynamixelSendPacket(dyna, msgLength, commands);
+  
+  wait(TXDELAY);
+  return DynamixelGetError(dyna);
+}
+
+uint8_t DynamixelSetReturnDelayTime(Dynamixel dyna, uint8_t returnDelayByte) {
+  uint8_t msgLength = 3;
+  uint8_t commands[msgLength];
+  
+  commands[0] = DYNAMIXEL_WRITE_DATA;
+  commands[1] = DYNAMIXEL_RETURN_DELAY_TIME;
+  commands[2] = returnDelayByte;
   
   DynamixelSendPacket(dyna, msgLength, commands);
   
