@@ -55,6 +55,8 @@ void setup()
   //Serial4.begin(57600);
   Serial.println("Start");
   
+  DynamixelSetId(&test1, 1);
+  
   DynamixelSetMode(test1, Wheel);
   DynamixelSetMode(test3, Wheel);
   //DynamixelSetId(test1, 3);
@@ -65,7 +67,6 @@ void loop()
   byte voltage =0, temperature=0, pingError=0;
   uint16_t load=0, presentPos=0, presentSpeed=0;
   DynamixelMode myMode;
-  
   
   Serial.println("Start");
   DynamixelGetVoltage(test1, &voltage);
@@ -93,30 +94,30 @@ void loop()
   Serial.println(pingError);
   
   Serial.println();
-  /*
+  
   for (int i=0; i<3; i++) {
-    DynamixelTurnAt(test1, 1023, 1023);
-    DynamixelTurnAt(test3, 1023, 1023);
+    DynamixelSpinWheel(test1, 1023, 1023);
+    DynamixelSpinWheel(test3, 1023, 1023);
     delay(1000);
-    DynamixelTurnAt(test1, 1023, 0);
-    DynamixelTurnAt(test3, 1023, 0);
+    DynamixelSpinWheel(test1, 1023, 0);
+    delay(500);
+    DynamixelSpinWheel(test3, 1023, 0);
+    delay(500);
+    DynamixelSpinWheel(test1, 1023, 2047);
+    delay(500);
+    DynamixelSpinWheel(test3, 1023, 2047);
+    delay(1000);
+    DynamixelSpinWheel(test1, 1023, 1024);
+    DynamixelSpinWheel(test3, 1023, 1024);
     delay(1000);
   }
-  for (int i=0; i<3; i++) {
-    DynamixelTurnAt(test1, 1023, 2047);
-    DynamixelTurnAt(test3, 1023, 2047);
-    delay(1000);
-    DynamixelTurnAt(test1, 1023, 1024);
-    DynamixelTurnAt(test3, 1023, 1024);
-    delay(1000);
-  }
-  */
+  
   /*
-  printError(DynamixelMoveTo(test3, 1024));
-  printError(DynamixelMoveTo(test1, 1024));
+  //printError(DynamixelRotateJoint(test3, 1024));
+  printError(DynamixelRotateJoint(test1, 1024));
   delay(1000);
-  printError(DynamixelMoveTo(test3, 3096));
-  printError(DynamixelMoveTo(test1, 3096));
+  //printError(DynamixelRotateJoint(test3, 3096));
+  printError(DynamixelRotateJoint(test1, 3096));
   delay(1000);
   */
   Serial.println();

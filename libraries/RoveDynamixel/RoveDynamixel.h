@@ -110,15 +110,16 @@ typedef enum {
 void DynamixelInit(Dynamixel* dyna, DynamixelType type, uint8_t id, uint8_t uartIndex, int baud);
 
 void DynamixelSendPacket(Dynamixel dyna, uint8_t length, uint8_t* instruction);
-uint8_t DynamixelGetReturnPacket(Dynamixel dyna, uint8_t* buffer, ssize_t bufferSize);
+uint8_t DynamixelGetReturnPacket(Dynamixel dyna, uint8_t* buffer, size_t bufferSize);
 uint8_t DynamixelGetError(Dynamixel dyna);
 
 uint8_t DynamixelPing(Dynamixel dyna);
 uint8_t DynamixelSetId(Dynamixel* dyna, uint8_t id);
 
-uint8_t DynamixelMoveTo(Dynamixel dyna, uint16_t position);
-uint8_t DynamixelTurnAt(Dynamixel dyna, uint16_t position, uint16_t speed);
+uint8_t DynamixelRotateJoint(Dynamixel dyna, uint16_t position);
+uint8_t DynamixelSpinWheel(Dynamixel dyna, uint16_t position, uint16_t speed);
 
+uint8_t DynamixelSetBaudRate(Dynamixel dyna, uint8_t baudByte);
 uint8_t DynamixelSetStatusReturnLevel(Dynamixel dyna, uint8_t level);
 uint8_t DynamixelSetMode(Dynamixel dyna, DynamixelMode mode);
 

@@ -33,7 +33,7 @@ void DynamixelSendPacket(Dynamixel dyna, uint8_t length, uint8_t* instruction) {
   roveBoard_UART_read(dyna.uart, NULL, length + 5);
 }
 
-uint8_t DynamixelGetReturnPacket(Dynamixel dyna, uint8_t* data, ssize_t dataSize) {
+uint8_t DynamixelGetReturnPacket(Dynamixel dyna, uint8_t* data, size_t dataSize) {
   // To be fixed
   uint8_t id, length, error;
   uint8_t temp1, temp2;
@@ -91,7 +91,7 @@ uint8_t DynamixelSetId(Dynamixel* dyna, uint8_t id) {
   return DynamixelGetError(*dyna);
 }
 
-uint8_t DynamixelMoveTo(Dynamixel dyna, uint16_t position) {
+uint8_t DynamixelRotateJoint(Dynamixel dyna, uint16_t position) {
   uint8_t msgLength = 4;
   uint8_t commands[msgLength];
   
@@ -106,7 +106,7 @@ uint8_t DynamixelMoveTo(Dynamixel dyna, uint16_t position) {
   return DynamixelGetError(dyna);
 }
 
-uint8_t DynamixelTurnAt(Dynamixel dyna, uint16_t position, uint16_t speed) {
+uint8_t DynamixelSpinWheel(Dynamixel dyna, uint16_t position, uint16_t speed) {
   uint8_t msgLength = 6;
   uint8_t commands[msgLength];
   
@@ -116,6 +116,20 @@ uint8_t DynamixelTurnAt(Dynamixel dyna, uint16_t position, uint16_t speed) {
   commands[3] = position >> 8;
   commands[4] = speed & 0x00FF;
   commands[5] = speed >> 8;
+  
+  DynamixelSendPacket(dyna, msgLength, commands);
+  
+  wait(TXDELAY);
+  return DynamixelGetError(dyna);
+}
+
+uint8_t DynamixelSetBaudRate(Dynamixel dyna, uint8_t baudByte) {
+  uint8_t msgLength = 3;
+  uint8_t commands[msgLength];
+  
+  commands[0] = DYNAMIXEL_WRITE_DATA;
+  commands[1] = DYNAMIXEL_BAUD_RATE;
+  commands[2] = baudByte;
   
   DynamixelSendPacket(dyna, msgLength, commands);
   
